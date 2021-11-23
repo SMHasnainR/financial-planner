@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{asset('assets/css/bootstrap.css')}}" type="text/css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@3/dark.css">
+
     {{-- Font Awesome Pro 5.14.0 by @fontawesome - https://fontawesome.com
     License - https://fontawesome.com/license (Commercial License) --}}
     {{-- <link rel="stylesheet" href="{{asset('assets/css/font-awesome.css')}}" type="text/css" /> --}}
@@ -47,13 +49,48 @@
             </div>
         </div>
     </div>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    {{-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
 	<script src="{{asset('assets/js/jquery.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9/dist/sweetalert2.min.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
     <script>
         $(document).ready(function(){
             let expenses = 0;
+
+            
             $(document).on('change','.expenses', function(){
+                calculateExpense();
+            })
+
+            // Hide the div and remove the input when close icon clicked 
+            $(document).on('click','.close', function(){
+                $(this).parent().prev().html('');
+                $(this).parent().parent().addClass('d-none');
+                calculateExpense();
+            })
+
+            $('#add-expense').on('click', function(){
+                Swal.fire({
+                title: 'Enter Expense name',
+                input: 'text',
+                background: '#303134',
+                color: 'white',
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
+                showCancelButton: true,
+                confirmButtonText: 'Enter',
+                allowOutsideClick: () => !Swal.isLoading()
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#expense-div').append(`<x-forms.input-line title="${result.value}" id='food' :close='true' />`)
+                }
+                })
+            })
+
+
+            function calculateExpense(){
                 //  Setting expenses to zero before calculating each expense input field
                 expenses = 0;
                 
@@ -64,49 +101,7 @@
                     }
                 });
                 $('#total').val(expenses);
-            })
-
-            $(document).on('click','.close', function(){
-                $(this).parent().prev().html('');
-                $(this).parent().parent().addClass('d-none');
-            })
-
-            $('#add-expense').on('click', function(){
-                Swal.fire({
-                title: 'Submit your Github username',
-                input: 'text',
-                inputAttributes: {
-                    autocapitalize: 'off'
-                },
-                showCancelButton: true,
-                confirmButtonText: 'Look up',
-                showLoaderOnConfirm: true,
-                preConfirm: (login) => {
-                    return fetch(`//api.github.com/users/${login}`)
-                    .then(response => {
-                        if (!response.ok) {
-                        throw new Error(response.statusText)
-                        }
-                        $('#expense-div').append(`<x-forms.input-line title="Food" id='food' :close='true' />`)
-
-                        return response.json()
-                    })
-                    .catch(error => {
-                        Swal.showValidationMessage(
-                        `Request failed: ${error}`
-                        )
-                    })
-                },
-                allowOutsideClick: () => !Swal.isLoading()
-                }).then((result) => {
-                if (result.isConfirmed) {
-                    Swal.fire({
-                    title: `${result.value.login}'s avatar`,
-                    imageUrl: result.value.avatar_url
-                    })
-                }
-                })
-            })
+            }
         });
     </script>
 </body>
