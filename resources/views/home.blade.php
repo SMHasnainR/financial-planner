@@ -30,20 +30,13 @@
     <div class="container">
         <h1 class="text-center text-warning m-5 text-uppercase">Financial Planner</h1>
         <div class="row">
-            <div class="offset-md-4 col-md-4">
-                <h4 class="text-center text-white">Week 1</h4>
-                <div id="expense-div">
-                    <x-forms.input-line title="Food" id='food'/>                
-                    <x-forms.input-line title="Petrol" id='petrol'/>                    
-                </div>
-                <div class="row">
-                    <div class="offset-md-11 col-md-1 mt-2">
-                        <i id="add-expense" class="far fa-plus-circle fa-lg text-success" style="cursor: pointer"></i>
-                    </div>
-                </div>
-                <hr class="text-white">
-                <x-forms.input-line title="Total" id='total' title-type="text-danger" :total='true' />
-            </div>
+            
+            <x-week-div />
+            {{-- <x-week-div week_no='2' />
+            <x-week-div week_no='3' />
+            <x-week-div week_no='4' />
+            <x-week-div week_no='5' /> --}}
+
         </div>
     </div>
 	<script src="{{asset('assets/js/jquery.js')}}"></script>
