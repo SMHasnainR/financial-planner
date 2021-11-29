@@ -4,76 +4,96 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{asset('assets/css/bootstrap.css')}}" type="text/css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@3/dark.css">
+    <link rel="stylesheet" href="{{asset('assets/css/custom.css')}}" type="text/css" />
+
     {{-- Font Awesome Pro 5.14.0 by @fontawesome - https://fontawesome.com
     License - https://fontawesome.com/license (Commercial License) --}}
     {{-- <link rel="stylesheet" href="{{asset('assets/css/font-awesome.css')}}" type="text/css" /> --}}
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-    <style>
-        body{
-            background-color: #303134;
-        }
-        input{
-            background-color: #303134 !important;
-            border-color: white !important;
-            border-radius: 20px !important;
-            border-width: 1px !important;
-            color: white !important;
-            padding: 2px 5px !important;
-        }
-        .expense-title, .total-title{
-            font-size: large;
-        }
-    </style>
+    
     <title>Financial Planner</title>
 </head>
 <body>
     <div class="container">
         <h1 class="text-center text-warning m-5 text-uppercase">Financial Planner</h1>
+        <form action="{{route('save')}}" method="post" enctype="multipart/form-data">
         <div class="row">
-            
-            <x-week-div />
-            {{-- <x-week-div week_no='2' />
-            <x-week-div week_no='3' />
-            <x-week-div week_no='4' />
-            <x-week-div week_no='5' /> --}}
-
-        </div>
+                @csrf
+                <x-week-div />
+                <x-week-div week_no='2' />
+                <x-week-div week_no='3' />
+                <x-week-div week_no='4' />
+                <x-week-div week_no='5' />
+                <div class="col-md-2 margin">
+                    <button type="submit" class="btn btn-success form-control">Save</button>
+                </div>
+                <div class="col-md-2 margin">
+                    <button class="btn btn-danger form-control">Delete</button>
+                </div>
+            </div>
+        </form>
     </div>
+    {{-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
 	<script src="{{asset('assets/js/jquery.js')}}"></script>
+	{{-- <script src="{{asset('assets/js/custom.js')}}"></script> --}}
     <script>
-        let food = 0;
-        let petrol = 0;
-        let expenses = 0;
         $(document).ready(function(){
-            // $('.expenses').on('change', function(){
-            //     expenses += parseInt($(this).val());
-            //     console.log(expenses);
-            //     $('#total').val(0);
-            //     $('#total').val(expenses);
-            // })
-            $('#add-expense').on('click', function(){
-                $('#expense-div').append(`<x-forms.input-line title="Food" id='food' :close='true' />`)
+        let expenses = 0;
+        
+        $(document).on('change','.expenses', function(){
+            let week_no = $(this).data('week');
+            calculateExpense(week_no);
+        })
+
+        // Hide the div and remove the input when close icon clicked 
+        $(document).on('click','.close', function(){
+            let week_no = $(this).data('week');
+
+            $(this).parent().prev().html('');
+            $(this).parent().parent().addClass('d-none');
+            calculateExpense(week_no);
+        })
+
+        $('.add-expense').on('click', function(){
+            let week_no = $(this).data('week');
+
+            Swal.fire({
+            title: 'Enter Expense name',
+            input: 'text',
+            background: '#303134',
+            inputAttributes: {
+                autocapitalize: 'off'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Enter',
+            allowOutsideClick: () => !Swal.isLoading()
+            }).then((result) => {
+            if (result.isConfirmed) {
+                $(this).parent().parent().prev().append(`<x-forms.input-line title="${result.value}" name='${result.value.toLowerCase()}' weekNo=${week_no} :close='true' />`)
+            }
+            })
+        })
+
+
+        function calculateExpense(week_no){
+            //  Setting expenses to zero before calculating each expense input field
+            expenses = 0;
+            // alert(week_no);
+            
+            // Loop through all expenses input and add them to the expenses variable
+            $(`.expenses-${week_no}`).each((i, el) => {
+                if(el.value){
+                    expenses += parseInt(el.value);
+                }
             });
-
-            $(document).on('click','.close', function(){
-                $(this).parent().parent().addClass('d-none');
-            })
-
-            $('#food').on('change', function(){
-                food = 0;
-                food = parseInt($(this).val());
-                expenses = food + petrol;
-                $('#total').val(0);
-                $('#total').val(expenses);
-            })
-            $('#petrol').on('change', function(){
-                petrol = 0;
-                petrol = parseInt($(this).val());
-                expenses = food + petrol;
-                $('#total').val(0);
-                $('#total').val(expenses);
-            })
-        });
+            $(`.total-${week_no}`).val(expenses);
+        }
+    });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9/dist/sweetalert2.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
+    
 </body>
 </html>

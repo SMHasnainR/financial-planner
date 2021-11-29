@@ -1,0 +1,23 @@
+body{
+    background-color: #303134;
+}
+input{
+    background-color: #303134 !important;
+    border-color: white !important;
+    border-radius: 20px !important;
+    border-width: 1px !important;
+    color: white !important;
+    padding: 2px 5px !important;
+}
+
+.margin{
+    margin-top: 180px;
+}
+
+button{
+    border-radius: 20px !important;
+
+}
+.expense-title, .total-title{
+    font-size: large;
+}
