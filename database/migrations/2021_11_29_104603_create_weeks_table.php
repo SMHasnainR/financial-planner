@@ -16,10 +16,10 @@ class CreateWeeksTable extends Migration
         Schema::create('weeks', function (Blueprint $table) {
             $table->id();
             $table->integer('number');
-            $table->integer('food');
-            $table->integer('petrol');
+            $table->integer('food')->nullable();
+            $table->integer('petrol')->nullable();
             // $table->integer('total');
-            $table->unsignedBigInteger('month_id');
+            $table->unsignedBigInteger('month_id')->nullable();
             $table->timestamps();
 
             $table->foreign('month_id')->references('id')->on('months')->onDelete('cascade');

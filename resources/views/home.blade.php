@@ -20,13 +20,22 @@
         <form action="{{route('save')}}" method="post" enctype="multipart/form-data">
         <div class="row">
                 @csrf
-                <x-week-div />
-                <x-week-div week_no='2' />
-                <x-week-div week_no='3' />
-                <x-week-div week_no='4' />
-                <x-week-div week_no='5' />
+
+                @php
+                    function returnWeekExpense($weekly_expense,$number){
+                        return $weekly_expense->filter(function($value,$key) use($number){ 
+                            return $value->number == $number;
+                        })->first();
+                    }
+                @endphp
+                
+                <x-week-div :week_expense='returnWeekExpense($weekly_expense,1)' />
+                <x-week-div :week_expense='returnWeekExpense($weekly_expense,2)' week_no='2'  />
+                <x-week-div :week_expense='returnWeekExpense($weekly_expense,3)' week_no='3'  />
+                <x-week-div :week_expense='returnWeekExpense($weekly_expense,4)' week_no='4'  />
+                <x-week-div :week_expense='returnWeekExpense($weekly_expense,5)' week_no='5'  />
                 <div class="col-md-2 margin">
-                    <button type="submit" class="btn btn-success form-control">Save</button>
+                    <button type="submit" class="btn btn-success form-control"> Save</button>
                 </div>
                 <div class="col-md-2 margin">
                     <button class="btn btn-danger form-control">Delete</button>

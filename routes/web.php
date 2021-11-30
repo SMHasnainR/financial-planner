@@ -16,24 +16,27 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home');
-});
+    $week = Week::all();
+
+    $data = [
+        'weekly_expense' => $week,
+    ];
+    return view('home', $data);
+})->name('home');
 
 Route::post('/save-expense', function (Request $request) {
     $expenses = $request->except('_token');
     foreach ($expenses as $expense => $value){
-        $expenseArr = explode('_',$expense);
-
-        $week_number = $expenseArr[1]; 
-        $week  = new Week;
-        $week->number = $expenseArr[1]; 
+        $expenseArr = explode('-',$expense);
+        
+        $week = Week::whereNumber($expenseArr[1])->first();
         if($expenseArr[0] == 'food'){
             $week->food = $value; 
         }elseif($expenseArr[0] == 'petrol'){
             $week->petrol = $value; 
         }
-        // if($week_number !=)
+
         $week->save();
     }
-    return view('home');
+    return redirect()->route('home');
 })->name('save');
