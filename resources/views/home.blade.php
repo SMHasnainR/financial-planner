@@ -22,10 +22,14 @@
                 @csrf
 
                 @php
+                // dd($weekly_expense);
+                // dd($weekly_expense->pluck('food')->sum());
+
                     function returnWeekExpense($weekly_expense,$number){
                         return $weekly_expense->filter(function($value,$key) use($number){ 
                             return $value->number == $number;
                         })->first();
+                        
                     }
                 @endphp
                 
@@ -34,6 +38,9 @@
                 <x-week-div :week_expense='returnWeekExpense($weekly_expense,3)' week_no='3'  />
                 <x-week-div :week_expense='returnWeekExpense($weekly_expense,4)' week_no='4'  />
                 <x-week-div :week_expense='returnWeekExpense($weekly_expense,5)' week_no='5'  />
+                
+                <x-week-div :week_expense='$weekly_expense' week_no='total'  />
+
                 <div class="col-md-2 margin">
                     <button type="submit" class="btn btn-success form-control"> Save</button>
                 </div>

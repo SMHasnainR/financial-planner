@@ -28,7 +28,9 @@ Route::post('/save-expense', function (Request $request) {
     $expenses = $request->except('_token');
     foreach ($expenses as $expense => $value){
         $expenseArr = explode('-',$expense);
-        
+        if($expenseArr[1] == 'total'){
+            continue;
+        }
         $week = Week::whereNumber($expenseArr[1])->first();
         if($expenseArr[0] == 'food'){
             $week->food = $value; 
