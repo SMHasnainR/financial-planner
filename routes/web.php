@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Month;
 use App\Models\Week;
 use Illuminate\Http\Request ;
 use Illuminate\Support\Facades\Route;
@@ -17,9 +18,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     $week = Week::all();
+    $months = Month::all();
 
     $data = [
         'weekly_expense' => $week,
+        'months' => $months,
     ];
     return view('home', $data);
 })->name('home');

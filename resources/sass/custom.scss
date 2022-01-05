@@ -1,0 +1,46 @@
+// Dark Mode Colors
+$bg_dark: #303134; 
+$font: "Google Sans", arial, sans-serif-medium, sans-serif;
+
+
+body{
+    background-color: $bg_dark;
+}
+input{
+    background-color: $bg_dark !important;
+    border-color: white !important;
+    border-radius: 20px !important;
+    border-width: 1px !important;
+    color: white !important;
+    padding: 2px 5px !important;
+}
+
+.margin{
+    margin-top: 180px;
+}
+
+button{
+    border-radius: 20px !important;
+
+}
+.expense-title, .total-title{
+    font-size: large;
+}
+
+.months{
+    margin:40px 0px;
+    div{
+        margin: 10px 0px;
+    }
+    button{
+        border-radius: 20px !important;
+        padding: 5px 40px !important;
+        font: 1.1em $font;
+        font-weight: 500;
+        text-transform: uppercase;
+        width: 160px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}

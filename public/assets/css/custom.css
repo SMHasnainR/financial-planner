@@ -1,23 +1,42 @@
-body{
-    background-color: #303134;
-}
-input{
-    background-color: #303134 !important;
-    border-color: white !important;
-    border-radius: 20px !important;
-    border-width: 1px !important;
-    color: white !important;
-    padding: 2px 5px !important;
+body {
+  background-color: #303134;
 }
 
-.margin{
-    margin-top: 180px;
+input {
+  background-color: #303134 !important;
+  border-color: white !important;
+  border-radius: 20px !important;
+  border-width: 1px !important;
+  color: white !important;
+  padding: 2px 5px !important;
 }
 
-button{
-    border-radius: 20px !important;
-
+.margin {
+  margin-top: 180px;
 }
-.expense-title, .total-title{
-    font-size: large;
+
+button {
+  border-radius: 20px !important;
+}
+
+.expense-title, .total-title {
+  font-size: large;
+}
+
+.months {
+  margin: 40px 0px;
+}
+.months div {
+  margin: 10px 0px;
+}
+.months button {
+  border-radius: 20px !important;
+  padding: 5px 40px !important;
+  font: 1.1em "Google Sans", arial, sans-serif-medium, sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  width: 160px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
