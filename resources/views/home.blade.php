@@ -24,7 +24,7 @@
         <div class='months row'>
             @foreach ($months as $month)
                 <div class="col-md-2">
-                    <button class='btn btn-outline-warning'>
+                    <button class="btn btn-outline-warning {{ $active_month == $month->name ? 'active' : ''}}" onclick="location.href='/{{$month->name}}' ">
                         {{$month->name}}
                     </button>
                 </div>

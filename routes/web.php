@@ -16,13 +16,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    $week = Week::all();
-    $months = Month::all();
+Route::get('/{month}', function ($active_month) {
 
+    // Getting week expenses form active month
+    $mnth =Month::where('name', $active_month)->firstOrFail();
+    $week = Week::where('month_id',$mnth->id)->get();
+    
+    $months = Month::all();
+    
     $data = [
         'weekly_expense' => $week,
         'months' => $months,
+        'active_month' => $active_month
     ];
     return view('home', $data);
 })->name('home');
