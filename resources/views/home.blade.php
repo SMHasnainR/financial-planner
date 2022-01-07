@@ -32,7 +32,7 @@
         </div>
 
 
-        <form action="{{ route('save') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('save',$active_month) }}" method="post" enctype="multipart/form-data">
             <div class="row">
                 @csrf
                 @php
