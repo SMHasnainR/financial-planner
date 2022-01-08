@@ -9,5 +9,5 @@ class OtherExpense extends Model
 {
     use HasFactory;
     protected $table='other_expenses';
-    
+    protected $guarded =['id'];
 }

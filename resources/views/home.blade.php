@@ -57,7 +57,7 @@
                     <button type="submit" class="btn btn-success form-control"> Save</button>
                 </div>
                 <div class="col-md-2 margin">
-                    <button class="btn btn-danger form-control">Delete</button>
+                    <button class="btn btn-danger form-control">Clear Data</button>
                 </div>
             </div>
         </form>
@@ -70,6 +70,12 @@
         $(document).ready(function() {
             let expenses = 0;
 
+            calculateExpense(1);
+            calculateExpense(2);
+            calculateExpense(3);
+            calculateExpense(4);
+            calculateExpense(5);
+
             $(document).on('change', '.expenses', function() {
                 let week_no = $(this).data('week');
                 calculateExpense(week_no);
@@ -79,8 +85,28 @@
             $(document).on('click', '.close', function() {
                 let week_no = $(this).data('week');
 
-                $(this).parent().prev().html('');
-                $(this).parent().parent().addClass('d-none');
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!',
+                    }).then((result) => {
+                    if (result.isConfirmed) {
+                        
+                        $(this).parent().prev().html('');
+                        $(this).parent().parent().addClass('d-none');
+
+                        Swal.fire(
+                        'Deleted!',
+                        'Your expense has been deleted.',
+                        'success'
+                        )
+                    }
+                })
+
                 calculateExpense(week_no);
             })
 

@@ -21,7 +21,17 @@
     <h4 class="text-center text-white"> {{ $weekNo == 'total' ? 'Grand Total' : 'Week '. $weekNo }}   </h4>
     <div class="expense-div" >
         <x-forms.input-line title="Petrol" name="petrol" :weekNo='$weekNo' :week_expense="$petrol" />                    
-        <x-forms.input-line title="Food" name="food" :weekNo='$weekNo' :week_expense="$food"  />                
+        <x-forms.input-line title="Food" name="food" :weekNo='$weekNo' :week_expense="$food"  />
+
+        {{-- @php
+            dd($weekExpense->other_expenses->first()->name);
+        @endphp --}}
+        @if (!empty($weekExpense) && $weekNo !== 'total' && count($weekExpense->other_expenses))
+            @foreach ($weekExpense->other_expenses as $expense)
+                <x-forms.input-line :title="$expense->name" :name="$expense->name" :weekNo="$weekNo" :week_expense="$expense->value" :close="true" />
+            @endforeach
+        @endif                
+
     </div>
     <div class="row">
         <div class="offset-md-11 col-md-1 mt-2">
