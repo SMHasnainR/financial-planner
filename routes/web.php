@@ -35,8 +35,10 @@ Route::get('/{month}', function ($active_month) {
         'weekly_expense' => $week,
         'months' => $months,
         'active_month' => $active_month,
+        'month_total_expense' => $week->sum('total_expenses'),
         // 'month_id' => $mnth->id
     ];
+
     // return $data['weekly_expense'];
     return view('home', $data);
 })->name('home');

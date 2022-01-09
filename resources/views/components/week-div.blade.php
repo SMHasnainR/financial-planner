@@ -8,11 +8,13 @@
             if($weekNo == 'total'){
                 $food = $weekExpense->pluck('food')->sum();
                 $petrol = $weekExpense->pluck('petrol')->sum();
+                // Sum all week total expenses to get monthly expense
+                $total = $weekExpense->sum('total_expenses');
             }else{
                 $food = $weekExpense->food;
                 $petrol = $weekExpense->petrol;
             }
-            $total = $food + $petrol;
+            // $total = $food + $petrol;
         }else{
             $food = 0;
             $petrol = 0;
@@ -34,7 +36,7 @@
 
     </div>
     <div class="row">
-        <div class="offset-md-11 col-md-1 mt-2">
+        <div class="offset-md-10 col-md-1 mt-2 p-0">
             <i class="add-expense far fa-plus-circle fa-lg text-success" data-week='{{$weekNo}}' style="cursor: pointer"></i>
         </div>
     </div>

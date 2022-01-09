@@ -9,7 +9,7 @@
             <input type="number" value="{{$weekExpense ?? '' }}" name='{{$name}}-{{$weekNo}}' class="form-control  {{ $classes }} {{ $total ? 'h3 total' : 'expenses expenses' }}-{{$weekNo}}" data-week="{{$weekNo}}"  {{$total ? 'readonly' : ''}}> 
         </div>
         @if ($close)
-            <div class="col-md-1">
+            <div class="col-md-1 p-0">
                 <i class="fas fa-times fa-lg text-danger close" data-week="{{$weekNo}}" style="cursor: pointer"></i>
             </div>
         @endif

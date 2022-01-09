@@ -106,7 +106,6 @@
                         )
                     }
                 })
-
                 calculateExpense(week_no);
             })
 
